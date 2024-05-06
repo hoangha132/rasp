@@ -1,0 +1,222 @@
+class item:
+id: int
+shape: int
+center: list #coordinate of item (x, y)
+
+count_tam_giac = 0 #use to detect shape of item
+count_vuong = 0 #use to detect shape of item
+count_tron = 0 #use to detect shape of item
+count_unknow = 0 #use to detect shape of item
+
+count_ignore = 10 #decrease by one every item is not updated
+
+is_update = 0 #use to know object is updatep from item which are determined in
+cv2.findcontour
+is_detected = 0 #use to know object not in detect region
+
+is_push = 0
+def __init__(seft, id, center, shape):
+seft.is_push = 0
+seft.shape = shape
+seft.id = id
+
+seft.center = center
+items: list[item] = []
+def getContours(img, img_contour):
+contours, _ = cv.findContours(img, cv.RETR_TREE, cv.CHAIN_APPROX_NONE)
+
+#list for object is determined from findcontour
+list_contours_object = []
+
+#detect item from cv2.findcontour
+for cnt in contours:
+area = cv.contourArea(cnt)
+#check area of object for prevent noise
+if ((area > 200) & (area < 5000)):
+#draw shape for around object
+cv.drawContours(img_contour, cnt, -1, (255, 0, 0), 2)
+
+#find number of vertex in this object
+peri = cv.arcLength(cnt, True)
+approx = cv.approxPolyDP(cnt, 0.02*peri, True)
+
+#draw rectangle for around object
+x, y, w, h = cv.boundingRect(approx)
+cv.rectangle(img_contour, (x, y), (x+w, y+h), (0,0,255), 2)
+#draw point in center of this rectangle
+center = [x+int(w/2), y+int(h/2)]
+cv.circle(img_contour, tuple(center), 1, (0,0,255), 2)
+
+
+shape: int = 0
+if len(approx) >= 8: shape = 5 #This is circle
+else:
+arr = convert_approx_to_list(approx)
+#filter for reduce vertex noise
+#remove vertex which has distance from it to two adjacent vertex very small
+shape = filter_for_remove_vectecx(arr)
+
+new_object = item(id, center, shape)
+list_contours_object.append(new_object)
+def getContours(img, img_contour):
+contours, _ = cv.findContours(img, cv.RETR_TREE, cv.CHAIN_APPROX_NONE)
+
+#list for object is determined from findcontour
+list_contours_object = []
+
+#detect item from cv2.findcontour
+for cnt in contours:
+#code in above
+None
+
+#update object in list "items" (list of object was detected before)
+for object in items:
+min_distance:int = 9999
+index_min_distance: int = 9999
+
+for i in range(len(list_contours_object)):
+
+distance = object.center[1] - list_contours_object[i].center[1]
+if distance < 0:
+continue
+if min_distance >= distance:
+index_min_distance = i
+min_distance = distance
+if min_distance < 20:
+min_object = list_contours_object[index_min_distance]
+
+if object.is_detected == 0:
+object.detect_object_many_times(min_object.shape)
+
+object.center = min_object.center
+object.is_update = 1
+cv.putText(img_contour, f"{object.shape}, {object.id}",
+tuple(object.center), cv.FONT_HERSHEY_SIMPLEX, 0.3, (0,0,0), 1)
+list_contours_object.remove(min_object)
+class item:
+def detect_object_many_times(seft, shape):
+if seft.is_detected == 1:
+return
+if shape == 3:#TAM_GIAC
+seft.count_tam_giac += 1
+seft.count_vuong = 0
+seft.count_tron = 0
+if seft.count_tam_giac >= 3:
+if seft.shape == 0:#UNKNOW
+seft.shape = 3 #TAM GIAC
+count_unknow = 0
+elif ((seft.shape == 4) | (seft.shape == 5)):
+seft.count_unknow += 1
+if seft.count_unknow >= 2:
+seft.shape = 0 #UNKNOW
+seft.count_vuong = 0
+seft.count_tam_giac = 0
+seft.count_tron = 0
+elif shape == 4:#VUONG
+#Similar to shape == 3
+None
+elif shape == 5:#TRON
+#Similar to shape == 3
+None
+def getContours(img, img_contour):
+contours, _ = cv.findContours(img, cv.RETR_TREE, cv.CHAIN_APPROX_NONE)
+
+#list for object is determined from findcontour
+list_contours_object = []
+
+#detect item from cv2.findcontour
+for cnt in contours:
+#code in above
+None
+
+#update object in list "items" (list of object was detected before)
+for object in items:
+#code in above
+None
+
+#add new items from "list_contours_object" (items was detected in cv2.findcontour)
+for new_object in list_contours_object:
+#out of detect region
+if new_object.center[1] < point_detec:
+continue
+new_object.is_update = 1
+id += 1
+new_object.shape = 0
+items.append(new_object)
+
+cv.putText(img_contour, f"{new_object.shape}, {new_object.id}",
+tuple(new_object.center), cv.FONT_HERSHEY_SIMPLEX, 0.3, (0,0,0), 1)
+def getContours(img, img_contour):
+contours, _ = cv.findContours(img, cv.RETR_TREE, cv.CHAIN_APPROX_NONE)
+
+#list for object is determined from findcontour
+list_contours_object = []
+
+#detect item from cv2.findcontour
+for cnt in contours:
+#code in above
+None
+
+#update object in list "items" (list of object was detected before)
+for object in items:
+#code in above
+None
+
+#add new items from "list_contours_object" (items was detected in cv2.findcontour)
+for new_object in list_contours_object:
+#code in above
+None
+
+#remove object which was not updated
+items_remove = []
+for i in range(len(items)):
+object = items[i]
+if object.is_update == 0:
+items[i].count_ignore -= 1
+ if items[i].count_ignore <= 0:
+ items_remove.append(object)
+ else:
+ items[i].count_ignore = 10
+ items[i].is_update = 0
+ for i in items_remove:
+items.remove(i)
+def getContours(img, img_contour):
+ contours, _ = cv.findContours(img, cv.RETR_TREE, cv.CHAIN_APPROX_NONE)
+
+ #list for object is determined from findcontour
+ list_contours_object = []
+
+ #detect item from cv2.findcontour
+ for cnt in contours:
+ #code in above
+ None
+
+ #update object in list "items" (list of object was detected before)
+ for object in items:
+ #code in above
+ None
+
+ #add new items from "list_contours_object" (items was detected in cv2.findcontour)
+ for new_object in list_contours_object:
+ #code in above
+ None
+
+ #remove object which was not updated
+ items_remove = []
+ for i in range(len(items)):
+ #code in above
+ None
+ for i in items_remove:
+ items.remove(i)
+ if __name__ == "__main__":
+ #create foreground mask
+
+ while 1:
+ #init region image for conveyt
+
+ #filter noise for image
+
+ #draw line detect on display
+
+ #detect object using cv2.findcontour
+ getContours(detec, img_contour)
