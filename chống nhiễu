@@ -1,0 +1,18 @@
+if __name__ == "__main__":
+#create foreground mask
+object_detector = cv.createBackgroundSubtractorKNN()
+while 1:
+#init region image for conveyt
+img = cap.capture_array()[50:450:, 250:320]
+#copy a new img with name "img_contour" for using after
+img_contour = img.copy()
+#filter noise for image
+#apply background
+detec = object_detector.apply(img)
+
+#using threshold for filter shadow
+_, detec = cv.threshold(detec,190,255,cv.THRESH_BINARY)
+blur = cv.GaussianBlur(detec,(5,5),0)
+_, detec = cv.threshold(blur,0,255,cv.THRESH_BINARY+cv.THRESH_OTSU)
+
+#draw line detect on display
