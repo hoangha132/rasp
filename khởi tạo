@@ -1,18 +1,30 @@
 #import library for pi camera
-  from picamera2 import Picamera2
-3 #import library for UART Port
-4 import serial
-5 if __name__ == "__main__":
-6 #init pi camera
-7 cap = Picamera2()
-8 cap.preview_configuration.main.size = (640,480)
-9 cap.preview_configuration.main.format = "RGB888"
-10 cap.preview_configuration.controls.FrameRate = 30
-11 cap.preview_configuration.align()
-12 cap.configure("preview")
-13 cap.start()
-14
-15 #init COM Port for UART transfer
-16 addr_com_port = "/dev/ttyUSB0"
-17 #Note: variable "addr_com_port" may be change according raspberrypi
-18 data_serial = serial.Serial(addr_com_port, 9600)
+from picamera2 import Picamera2
+#import library for UART Port
+import serial
+if __name__ == "__main__":
+#init pi camera
+cap = Picamera2()
+cap.preview_configuration.main.size = (640,480)
+cap.preview_configuration.main.format = "RGB888"
+cap.preview_configuration.controls.FrameRate = 30
+cap.preview_configuration.align()
+cap.configure("preview")
+cap.start()
+
+#init COM Port for UART transfer
+addr_com_port = "/dev/ttyUSB0"
+#Note: variable "addr_com_port" may be change according raspberrypi
+data_serial = serial.Serial(addr_com_port, 9600)
+
+import cv2 as cv
+import numpy as np
+if __name__ == "__main__":
+
+#init pi camer
+#init COM Port
+
+while 1:
+#init region image for conveyt
+#Note: range of region may be change because camera is not fix in physical system
+img = cap.capture_array()[50:450:, 250:320]
