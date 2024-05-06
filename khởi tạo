@@ -1,0 +1,18 @@
+#import library for pi camera
+  from picamera2 import Picamera2
+3 #import library for UART Port
+4 import serial
+5 if __name__ == "__main__":
+6 #init pi camera
+7 cap = Picamera2()
+8 cap.preview_configuration.main.size = (640,480)
+9 cap.preview_configuration.main.format = "RGB888"
+10 cap.preview_configuration.controls.FrameRate = 30
+11 cap.preview_configuration.align()
+12 cap.configure("preview")
+13 cap.start()
+14
+15 #init COM Port for UART transfer
+16 addr_com_port = "/dev/ttyUSB0"
+17 #Note: variable "addr_com_port" may be change according raspberrypi
+18 data_serial = serial.Serial(addr_com_port, 9600)
