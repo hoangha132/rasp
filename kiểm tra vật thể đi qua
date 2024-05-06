@@ -1,0 +1,36 @@
+def checkThrough(data_serial):
+ for item in items:
+ if item.is_detected == 1:
+ if item.is_push == 1:
+ continue
+
+ if item.shape == 3:
+ if ((item.center[1] <= point_tam_giac + 10) & (item.center[1] >= point_tam_giac
+- 10)):
+ item.is_push = 1
+ #send signal through UART
+ data_serial.write("3\r".encode())
+ elif item.shape == 4:
+ #Similar above
+ None
+ elif item.shape == 5:
+ #Similar above
+ None
+ else:#item hasn’t detected
+ if ((item.center[1] <= point_detec + 10) & (item.center[1] >= point_detec - 10)):
+ item.is_detected = 1
+if __name__ == "__main__":
+ #create foreground mask
+
+ while 1:
+ #init region image for conveyt
+
+ #filter noise for image
+
+ #draw line detect on display
+
+ #detect object using cv2.findcontour
+ getContours(detec, img_contour)
+13
+14 #check object through line detect
+15 checkThrough(data_serial)
