@@ -1,0 +1,11 @@
+import cv2 as cv
+import numpy as np
+if __name__ == "__main__":
+
+#init pi camer
+#init COM Port
+
+while 1:
+#init region image for conveyt
+#Note: range of region may be change because camera is not fix in physical system
+img = cap.capture_array()[50:450:, 250:320]
