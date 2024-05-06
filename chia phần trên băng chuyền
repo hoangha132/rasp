@@ -1,17 +1,17 @@
 #init variable for save coordinate of line
-2 point_detec = 280
-3 point_tron = 230
-4 point_vuong = 155
-5 point_tam_giac = 60
-6
-7 if __name__ == "__main__":
-8 #init pi camera
-9 #init COM Port
-10
-11 while 1:
-12 #init region image for conveyt
-13 #draw line detect on image for easy to demonstrate
-14 cv.line(img_contour, (0, point_detec), (width - 1, point_detec), (255,0, 0), 3)
-15 cv.line(img_contour, (0, point_tron), (width - 1, point_tron), (255,0, 0), 3)
-16 cv.line(img_contour, (0, point_vuong), (width - 1, point_vuong), (255,0, 0), 3)
-17 cv.line(img_contour, (0, point_tam_giac), (width - 1, point_tam_giac), (255,0, 0), 3
+point_detec = 280
+point_tron = 230
+point_vuong = 155
+point_tam_giac = 60
+
+if __name__ == "__main__":
+#init pi camera
+#init COM Port
+
+while 1:
+#init region image for conveyt
+#draw line detect on image for easy to demonstrate
+cv.line(img_contour, (0, point_detec), (width - 1, point_detec), (255,0, 0), 3)
+cv.line(img_contour, (0, point_tron), (width - 1, point_tron), (255,0, 0), 3)
+cv.line(img_contour, (0, point_vuong), (width - 1, point_vuong), (255,0, 0), 3)
+cv.line(img_contour, (0, point_tam_giac), (width - 1, point_tam_giac), (255,0, 0), 3
